@@ -605,40 +605,17 @@ def build_ui():
     return demo
 
 if __name__ == "__main__":
+    # Local dev: scan for a free port
     demo = build_ui()
-    server_name = "0.0.0.0"
     base_port = int(os.getenv("PORT", 7860))
-    share = os.getenv("GRADIO_SHARE", "false").lower() == "true"
-
-    launched = False
     for attempt in range(10):
-        server_port = base_port + attempt
         try:
-            demo.launch(
-                server_name=server_name,
-                server_port=server_port,
-                share=share,
-            )
-            launched = True
+            demo.launch(server_name="0.0.0.0", server_port=base_port + attempt)
             break
-        except ValueError as exc:
-            if "localhost is not accessible" in str(exc):
-                logger.warning("Localhost not accessible; retrying with share=True.")
-                demo.launch(
-                    server_name=server_name,
-                    server_port=server_port,
-                    share=True,
-                )
-                launched = True
-                break
-            raise
-        except OSError as exc:
-            if "Cannot find empty port" in str(exc):
-                logger.warning("Port %d busy, trying next port.", server_port)
-                continue
-            raise
+        except OSError:
+            continue
+else:
+    # Hugging Face Spaces: module-level launch on fixed port 7860
+    demo = build_ui()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
 
-    if not launched:
-        raise OSError(
-            f"Could not start app: ports {base_port}-{base_port + 9} are unavailable."
-        )
