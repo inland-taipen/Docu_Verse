@@ -281,9 +281,6 @@ body, .gradio-container {
 #chat-list label:hover {
     background: rgba(255,255,255,0.05) !important;
 }
-#chat-list label.selected {
-    background: rgba(255,255,255,0.1) !important;
-}
 #chat-list span {
     color: white !important;
     font-size: 0.9em !important;
@@ -297,34 +294,15 @@ body, .gradio-container {
     border: none !important;
     padding: 10px 20px !important;
 }
-.message-wrap .message.user {
-    background-color: transparent !important;
-    border: none !important;
-}
-.message-wrap .message.bot {
-    background-color: #444654 !important;
-    border: none !important;
-}
 #input-container {
-    padding: 20px 40px !important;
+    padding: 10px 20px !important;
     background: transparent !important;
-    border-top: 1px solid transparent !important;
-}
-#input-area {
-    background-color: #40414f !important;
-    border-radius: 12px !important;
-    padding: 5px 15px !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1) !important;
-    display: flex !important;
-    align-items: center !important;
 }
 #input-area textarea {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    background: #40414f !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 8px !important;
     color: white !important;
-    flex-grow: 1 !important;
 }
 #submit-btn {
     background: transparent !important;
@@ -338,44 +316,46 @@ body, .gradio-container {
 #pdf-status {
     font-size: 0.85em !important;
     color: #aaa !important;
-    margin-top: 10px !important;
+    margin-top: 5px !important;
+    padding: 0 20px !important;
 }
 #header-area {
     text-align: center;
-    padding: 60px 20px 20px 20px;
+    padding: 15px 20px 10px 20px;
     background-color: transparent;
 }
 #main-header {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 #main-header h2 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
+    font-size: 1.8em;
+    margin-bottom: 5px;
 }
 #sample-prompts {
     display: flex !important;
     justify-content: center !important;
-    gap: 15px !important;
+    gap: 10px !important;
     flex-wrap: wrap !important;
     max-width: 800px !important;
-    margin: 0 auto !important;
+    margin: 0 auto 10px auto !important;
 }
 .sample-prompt {
     background-color: #40414f !important;
     border: 1px solid rgba(255,255,255,0.1) !important;
     color: var(--text-color) !important;
     border-radius: 8px !important;
-    padding: 12px 15px !important;
-    font-size: 0.95em !important;
+    padding: 8px 12px !important;
+    font-size: 0.9em !important;
     cursor: pointer !important;
-    flex: 1 1 calc(50% - 15px) !important;
-    min-width: 200px !important;
+    flex: 1 1 calc(50% - 10px) !important;
+    min-width: 180px !important;
     text-align: left !important;
 }
 .sample-prompt:hover {
     background-color: #2A2B32 !important;
 }
 """
+
 
 def build_ui():
     with gr.Blocks(
