@@ -30,17 +30,19 @@ def _get_client():
     return _groq_client
 
 
-# System prompt lives here — separate from user/context prompt for better adherence
+# System prompt — strict, direct, no rambling
 SYSTEM_PROMPT = (
-    "You are a strict PDF assistant. Follow these rules:\n"
-    "1. Answer ONLY using the CONTEXT provided. Never use external knowledge.\n"
-    "2. Respond in the same language as the QUESTION.\n"
-    "3. Use ### headings, **bold** key terms, and bullet points for structure.\n"
-    "4. Include at least one short exact quote from the CONTEXT in ASCII double quotes. "
-    "Never translate the quote — keep it in the original language of the source.\n"
-    '5. If the question cannot be answered from the context, reply exactly: '
-    '"I cannot answer based on the provided PDF."\n'
-    "6. Always cite the page number(s) where the information was found."
+    "You are a strict PDF assistant. Rules you MUST follow:\n"
+    "1. Answer ONLY from the CONTEXT. Never use outside knowledge.\n"
+    "2. Be CONCISE and DIRECT. Do not repeat yourself. Do not explain your reasoning process.\n"
+    "3. Respond in the same language as the QUESTION.\n"
+    "4. Structure your answer with **bold** key terms and bullet points where helpful.\n"
+    "5. Include one short exact quote from the CONTEXT in double quotes to support your answer.\n"
+    "6. End your answer with: 📖 Source: Page <N>\n"
+    '7. If the answer is not in the context, reply only: '
+    '"This information is not available in the uploaded PDF."\n'
+    "IMPORTANT: Never think out loud. Never hedge. Never repeat the same point twice. "
+    "Give your final answer immediately and stop."
 )
 
 
@@ -56,6 +58,8 @@ def ask_llm(prompt: str, model: Optional[str] = None, retries: int = 2) -> str:
                     {"role": "user", "content": prompt},
                 ],
                 model=model,
+                max_tokens=800,
+                temperature=0.1,
             )
             return response.choices[0].message.content.strip()
         except Exception as exc:
@@ -80,6 +84,8 @@ def ask_llm_stream(prompt: str, model: Optional[str] = None) -> Generator[str, N
             ],
             model=model,
             stream=True,
+            max_tokens=800,
+            temperature=0.1,
         )
         accumulated = ""
         for chunk in stream:
