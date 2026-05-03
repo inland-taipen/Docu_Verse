@@ -1,0 +1,72 @@
+{
+  "description": "Test queries for the Multilingual PDF Constrained Conversational Agent",
+  "sample_pdf": "sample.pdf",
+  "valid_queries": [
+    {
+      "id": "V1",
+      "query": "What is the main topic or subject of this document?",
+      "language": "en",
+      "expected_answer_not_empty": true,
+      "must_include_citation": true,
+      "notes": "A broad question that should always be answerable from any PDF."
+    },
+    {
+      "id": "V2",
+      "query": "What are the key conclusions or findings mentioned?",
+      "language": "en",
+      "expected_answer_not_empty": true,
+      "must_include_citation": true,
+      "notes": "Tests retrieval of conclusion/summary sections."
+    },
+    {
+      "id": "V3",
+      "query": "¿Cuáles son los puntos principales del documento?",
+      "language": "es",
+      "expected_answer_not_empty": true,
+      "must_include_citation": true,
+      "notes": "Spanish query — answer must be in Spanish."
+    },
+    {
+      "id": "V4",
+      "query": "इस दस्तावेज़ में किस विषय पर चर्चा की गई है?",
+      "language": "hi",
+      "expected_answer_not_empty": true,
+      "must_include_citation": true,
+      "notes": "Hindi query — answer must be in Hindi."
+    },
+    {
+      "id": "V5",
+      "query": "このドキュメントの目的は何ですか？",
+      "language": "ja",
+      "expected_answer_not_empty": true,
+      "must_include_citation": true,
+      "notes": "Japanese query — answer must be in Japanese."
+    }
+  ],
+  "invalid_queries": [
+    {
+      "id": "I1",
+      "query": "What is the capital of France?",
+      "language": "en",
+      "expected_refusal": true,
+      "expected_refusal_contains": "cannot answer",
+      "notes": "General knowledge question unrelated to any PDF content."
+    },
+    {
+      "id": "I2",
+      "query": "Who won the FIFA World Cup in 2022?",
+      "language": "en",
+      "expected_refusal": true,
+      "expected_refusal_contains": "cannot answer",
+      "notes": "Sports trivia — must be refused."
+    },
+    {
+      "id": "I3",
+      "query": "Write me a poem about the ocean.",
+      "language": "en",
+      "expected_refusal": true,
+      "expected_refusal_contains": "cannot answer",
+      "notes": "Creative task outside PDF scope — must be refused."
+    }
+  ]
+}
