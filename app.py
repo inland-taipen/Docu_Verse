@@ -22,26 +22,10 @@ except ImportError:
     pass
 
 import gradio as gr
-from gradio_client import utils as gradio_client_utils
 
 from llm_interface import ask_llm, ask_llm_stream, DEFAULT_MODEL
 from pdf_processor import PDFProcessor
 from utils import build_prompt, detect_language, format_citations
-
-# ---------------------------------------------------------------------------
-# Compatibility patch
-# ---------------------------------------------------------------------------
-if hasattr(gradio_client_utils, "get_type"):
-    _orig_get_type = gradio_client_utils.get_type
-
-    def _safe_get_type(schema):
-        if isinstance(schema, bool):
-            return "boolean"
-        if not isinstance(schema, dict):
-            return "any"
-        return _orig_get_type(schema)
-
-    gradio_client_utils.get_type = _safe_get_type
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -604,18 +588,6 @@ def build_ui():
 
     return demo
 
-if __name__ == "__main__":
-    # Local dev: scan for a free port
-    demo = build_ui()
-    base_port = int(os.getenv("PORT", 7860))
-    for attempt in range(10):
-        try:
-            demo.launch(server_name="0.0.0.0", server_port=base_port + attempt)
-            break
-        except OSError:
-            continue
-else:
-    # Hugging Face Spaces: module-level launch on fixed port 7860
-    demo = build_ui()
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+demo = build_ui()
+demo.launch()
 
