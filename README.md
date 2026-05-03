@@ -8,7 +8,7 @@ sdk_version: "4.36.0"
 app_file: app.py
 pinned: false
 license: mit
-short_description: Multilingual PDF chatbot — ask questions in any language, answers grounded strictly in your document.
+short_description: Multilingual PDF chatbot grounded strictly in your document.
 ---
 
 # Docu_Verse 📄🌐
