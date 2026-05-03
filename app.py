@@ -22,10 +22,24 @@ except ImportError:
     pass
 
 import gradio as gr
+from gradio_client import utils as _gc_utils
 
 from llm_interface import ask_llm, ask_llm_stream, DEFAULT_MODEL
 from pdf_processor import PDFProcessor
 from utils import build_prompt, detect_language, format_citations
+
+# ---------------------------------------------------------------------------
+# Compatibility patch — gradio_client passes bool schemas to get_type(),
+# which does `"const" in schema` and crashes on non-dict types.
+# ---------------------------------------------------------------------------
+_orig_get_type = getattr(_gc_utils, "get_type", None)
+if _orig_get_type is not None:
+    def _safe_get_type(schema):
+        if not isinstance(schema, dict):
+            return "boolean" if isinstance(schema, bool) else "any"
+        return _orig_get_type(schema)
+    _gc_utils.get_type = _safe_get_type
+
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -589,5 +603,5 @@ def build_ui():
     return demo
 
 demo = build_ui()
-demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=7860)
 
