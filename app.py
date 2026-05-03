@@ -56,9 +56,9 @@ AUDIT_LOG_PATH = os.path.join(os.path.dirname(__file__), "query_audit.jsonl")
 
 
 def _confidence_label(score: float) -> str:
-    if score >= 0.72:
+    if score >= 0.42:
         return "high"
-    if score >= 0.52:
+    if score >= 0.32:
         return "medium"
     return "low"
 
