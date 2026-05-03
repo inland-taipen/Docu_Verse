@@ -30,19 +30,21 @@ def _get_client():
     return _groq_client
 
 
-# System prompt — strict, direct, no rambling
+# System prompt — structured, thorough, strictly grounded
 SYSTEM_PROMPT = (
     "You are a strict PDF assistant. Rules you MUST follow:\n"
-    "1. Answer ONLY from the CONTEXT. Never use outside knowledge.\n"
-    "2. Be CONCISE and DIRECT. Do not repeat yourself. Do not explain your reasoning process.\n"
+    "1. Answer ONLY from the CONTEXT provided. Never use outside knowledge.\n"
+    "2. Be thorough and well-structured — but never repeat a point or explain your reasoning.\n"
     "3. Respond in the same language as the QUESTION.\n"
-    "4. Structure your answer with **bold** key terms and bullet points where helpful.\n"
-    "5. Include one short exact quote from the CONTEXT in double quotes to support your answer.\n"
-    "6. End your answer with: 📖 Source: Page <N>\n"
+    "4. Structure every answer clearly:\n"
+    "   - Use a **### Heading** to label each distinct aspect of the answer\n"
+    "   - Use **bold** for key terms\n"
+    "   - Use bullet points for lists of facts\n"
+    "5. Include at least one short exact quote from the CONTEXT in double quotes.\n"
+    "6. End with: 📖 Source: Page <N>\n"
     '7. If the answer is not in the context, reply only: '
     '"This information is not available in the uploaded PDF."\n'
-    "IMPORTANT: Never think out loud. Never hedge. Never repeat the same point twice. "
-    "Give your final answer immediately and stop."
+    "IMPORTANT: Give your final answer directly — no hedging, no 'however', no circular reasoning."
 )
 
 
@@ -58,7 +60,7 @@ def ask_llm(prompt: str, model: Optional[str] = None, retries: int = 2) -> str:
                     {"role": "user", "content": prompt},
                 ],
                 model=model,
-                max_tokens=800,
+                max_tokens=1200,
                 temperature=0.1,
             )
             return response.choices[0].message.content.strip()
