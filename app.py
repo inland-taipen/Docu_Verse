@@ -394,23 +394,21 @@ def build_ui():
 
             # --- MAIN AREA ---
             with gr.Column(elem_id="main-area", scale=8):
-                with gr.Column(elem_id="header-area"):
-                    gr.Markdown("## Multilingual PDF Chat\nAsk questions in **any language** — answers are strictly grounded in your PDF.", elem_id="main-header")
-                    
-                    with gr.Row(elem_id="sample-prompts"):
-                        prompt1 = gr.Button("What is the main topic of this document?", elem_classes="sample-prompt")
-                        prompt2 = gr.Button("Summarize the key findings.", elem_classes="sample-prompt")
-                        prompt3 = gr.Button("¿Cuáles son las conclusiones principales?", elem_classes="sample-prompt")
-                        prompt4 = gr.Button("इस दस्तावेज़ का मुख्य विषय क्या है?", elem_classes="sample-prompt")
-
-                chatbot = gr.Chatbot(height=500, show_label=False, elem_id="chatbot")
+                gr.Markdown("### 📄 Docu_Verse — Ask in any language, answers grounded in your PDF.", elem_id="main-header")
                 active_pdf_label = gr.Markdown("", elem_id="pdf-status")
-                
+
+                chatbot = gr.Chatbot(height=380, show_label=False, elem_id="chatbot")
+
                 with gr.Row(elem_id="input-container"):
-                    with gr.Column(scale=1, elem_id="input-area"):
-                        with gr.Row():
-                            msg_input = gr.Textbox(show_label=False, placeholder="Send a message...", container=False, scale=9)
-                            submit_btn = gr.Button("➤", elem_id="submit-btn", scale=1)
+                    msg_input = gr.Textbox(show_label=False, placeholder="Send a message...", container=False, scale=9)
+                    submit_btn = gr.Button("➤", elem_id="submit-btn", scale=1)
+
+                with gr.Row(elem_id="sample-prompts"):
+                    prompt1 = gr.Button("What is the main topic?", elem_classes="sample-prompt")
+                    prompt2 = gr.Button("Summarize the key findings.", elem_classes="sample-prompt")
+                    prompt3 = gr.Button("¿Cuáles son las conclusiones?", elem_classes="sample-prompt")
+                    prompt4 = gr.Button("इस दस्तावेज़ का मुख्य विषय?", elem_classes="sample-prompt")
+
 
 
         # --- LOGIC ---
