@@ -491,9 +491,6 @@ def build_ui():
             overlap_threshold = 0.08 if _is_broad_in_scope_query(user_msg) else 0.12
             overlap_verified = evidence_overlap >= overlap_threshold
 
-            if not citation_verified and not overlap_verified:
-                full_response += "\n\n> ⚠️ *Note: Could not fully verify grounding against source chunks.*"
-
             # Build final reply with colour-coded confidence
             conf_icon = CONF_ICON.get(confidence, "⚪")
             citations = format_citations(chunks)
